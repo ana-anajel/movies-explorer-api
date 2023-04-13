@@ -25,22 +25,12 @@ app.use('*', (req, res, next) => next(new NotFoundError('Страница не �
 // // обработчик ошибок celebrate
 // app.use(errors());
 
-// обработчик ошибки
 app.use(errorHandler);
 
-
-
-
-// включаем валидацию базы
 mongoose.set('runValidators', true);
-// соединяемся с базой
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb', {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-}, () => {
-  console.log('Connected to MongoDb');
-
-  // Слушаем порт, подключаем апи
-  app.listen(PORT, (error) => (error ? console.error(error) : console.log(`App listening on port ${PORT}`)));
-});
+mongoose.connect(DB_ADDRESS)
+  .then(() => {
+    console.log('Connected to MongoDb');
+    app.listen(PORT, (error) => (error ? console.error(error) : console.log(`App listening on port ${PORT}`)));
+  })
+  .catch((e) => console.log('Connection failed'));
