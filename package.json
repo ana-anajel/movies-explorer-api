@@ -1,0 +1,12 @@
+{
+  "name": "movies-explorer-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "echo \"Error: no test specified\" && exit 1",
+    "start": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anzhelika Shilyaeva",
+  "license": "ISC"
+}
