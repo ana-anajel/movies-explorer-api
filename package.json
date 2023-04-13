@@ -9,5 +9,9 @@
     "lint": "npx eslint ."
   },
   "author": "Anzhelika Shilyaeva",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  }
 }
