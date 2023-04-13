@@ -4,8 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "echo \"Error: no test specified\" && exit 1",
-    "start": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
   },
   "author": "Anzhelika Shilyaeva",
   "license": "ISC"
