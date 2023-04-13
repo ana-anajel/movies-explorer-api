@@ -12,4 +12,4 @@ users.get('/me', getUser);
 //обновляет информацию о пользователе (email и имя)
 users.patch('/me', updateUser);
 
-module.exports = router;
+module.exports = users;

@@ -14,4 +14,4 @@ movies.post('/', createMovie);
 //удаляет сохранённый фильм по id
 movies.delete('/movies/_id', deleteMovie);
 
-module.exports = router;
+module.exports = movies;
