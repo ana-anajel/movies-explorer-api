@@ -17,7 +17,7 @@ const getMovies = async (req, res, next) => {
 const createMovie = async (req, res, next) => {
   try {
     const owner = req.user._id;
-    const movieId = req.user._id;
+    const movieId = 877655;
     const {
       country,
       director,
@@ -48,10 +48,8 @@ const createMovie = async (req, res, next) => {
     return res.status(CodeSucces.CREATED).json(movie);
   } catch (e) {
     if (e.name === 'ValidationError') {
-      console.log(e);
       return next(new BadReqestError('Переданы некорректные данные при создании фильма.'));
     }
-    console.log(e);
     return next(e);
   }
 };
@@ -64,17 +62,14 @@ const deleteMovie = async (req, res, next) => {
     if (movie === null) {
       throw new NotFoundError(`Фильм ${_id} не найден.`);
     }
-
     const owner = movie.owner.toHexString();
-
     if (owner !== admin) {
       throw new ForbiddenError('Можно удалять только свои фильмы.');
     }
-
     await Movie.findByIdAndRemove(_id);
     return res.send({ message: `Фильм ${_id} удалён.` });
   } catch (e) {
-    console.log(e);
+
     if (e.name === 'CastError') {
       return next(new BadReqestError('Передан некорректный id фильма.'));
     }

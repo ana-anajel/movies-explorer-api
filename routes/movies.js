@@ -1,17 +1,12 @@
 const movies = require('express').Router();
-//const { celebrate, Joi } = require('celebrate');
 const { getMovies, createMovie, deleteMovie } = require('../controllers/movies');
-//const { url } = require('../utils/regularExpressions');
-
-//Создайте контроллер для каждого роута.
-//Защитите роуты авторизацией: если клиент не прислал JWT,
-//доступ к роутам ему должен быть закрыт.
+const { validateCreateMovie, validateDeleteMovie } = require('../middlewares/validate');
 
 //возвращает все сохранённые текущим  пользователем фильмы
 movies.get('/', getMovies);
 //создаёт фильм с переданными в теле данным
-movies.post('/', createMovie);
+movies.post('/', validateCreateMovie, createMovie);
 //удаляет сохранённый фильм по id
-movies.delete('/:_id', deleteMovie);
+movies.delete('/:_id', validateDeleteMovie, deleteMovie);
 
 module.exports = movies;

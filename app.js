@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes');
 const auth = require('./middlewares/auth');
+const { errors } = require('celebrate');
+const { validateSignUp, validateSignIn } = require('./middlewares/validate');
 const { createUser, login } = require('./controllers/users');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError');
@@ -10,8 +12,8 @@ const NotFoundError = require('./errors/NotFoundError');
 const app = express();
 app.use(express.json());
 
-app.post('/signup', createUser); // создаёт пользователя
-app.post('/signin', login); // авторизирует пользователя
+app.post('/signup', validateSignUp, createUser); // создаёт пользователя
+app.post('/signin', validateSignIn, login); // авторизирует пользователя
 
 app.use(auth);
 app.use(router);
@@ -20,9 +22,7 @@ app.use('*', (req, res, next) => next(new NotFoundError('Страница не �
 // // логирование
 // app.use(errorLogger);
 
-// // обработчик ошибок celebrate
-// app.use(errors());
-
+app.use(errors());
 app.use(errorHandler);
 
 mongoose.set('runValidators', true);

@@ -1,15 +1,10 @@
 const users = require('express').Router();
-//const { celebrate, Joi } = require('celebrate');
 const { getUser, updateUser } = require('../controllers/users');
-//const { url, id } = require('../utils/regularExpressions');
+const { validateUpdateUser } = require('../middlewares/validate');
 
-//Создайте контроллер для каждого роута.
-//Защитите роуты авторизацией: если клиент не прислал JWT,
-//доступ к роутам ему должен быть закрыт.
-
-// возвращает информацию о пользователе (email и имя)GET /users/me
+// возвращает информацию о пользователе (email и имя)
 users.get('/me', getUser);
 //обновляет информацию о пользователе (email и имя)
-users.patch('/me', updateUser);
+users.patch('/me', validateUpdateUser, updateUser);
 
 module.exports = users;

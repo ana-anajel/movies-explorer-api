@@ -60,9 +60,9 @@ const movieSchema = new mongoose.Schema(
       ref: 'user',
       required: true,
     },
-    //mongoose.Schema.Types.Number
+
     movieId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.Number,
       required: true,
     },
 
