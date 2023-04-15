@@ -60,9 +60,10 @@ const movieSchema = new mongoose.Schema(
       ref: 'user',
       required: true,
     },
-    //* id фильма, который содержится в ответе сервиса MoviesExplorer. Обязательное поле.
+    //mongoose.Schema.Types.Number
     movieId: {
-      type: mongoose.Schema.Types.Number,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'movie',
       required: true,
     },
 
@@ -81,4 +82,4 @@ const movieSchema = new mongoose.Schema(
   },
 );
 
-module.exports = mongoose.model('card', movieSchema);
+module.exports = mongoose.model('movie', movieSchema);

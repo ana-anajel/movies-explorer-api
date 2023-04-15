@@ -12,6 +12,6 @@ movies.get('/', getMovies);
 //создаёт фильм с переданными в теле данным
 movies.post('/', createMovie);
 //удаляет сохранённый фильм по id
-movies.delete('/_id', deleteMovie);
+movies.delete('/:_id', deleteMovie);
 
 module.exports = movies;

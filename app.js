@@ -2,21 +2,19 @@ const { PORT, DB_ADDRESS } = require('./config');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes');
-
-//const { createUser, login } = require('./controllers/users');
+const auth = require('./middlewares/auth');
+const { createUser, login } = require('./controllers/users');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError');
 
 const app = express();
+app.use(express.json());
 
-//app.post('/signup', createUser); // создаёт пользователя
+app.post('/signup', createUser); // создаёт пользователя
+app.post('/signin', login); // авторизирует пользователя
 
-//app.post('/signin', login); // авторизирует пользователя
-
-//app.use(auth);
-
+app.use(auth);
 app.use(router);
-
 app.use('*', (req, res, next) => next(new NotFoundError('Страница не существует.')));
 
 // // логирование

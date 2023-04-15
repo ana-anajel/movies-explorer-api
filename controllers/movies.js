@@ -16,9 +16,9 @@ const getMovies = async (req, res, next) => {
 };
 
 const createMovie = async (req, res, next) => {
-  console.log(req)
   try {
-    //const owner = req.user._id;
+    const owner = req.user._id;
+    const movieId = req.user._id;
     const {
       country,
       director,
@@ -26,7 +26,7 @@ const createMovie = async (req, res, next) => {
       year,
       description,
       image,
-      trailer,//*
+      trailerLink,
       thumbnail,
       nameRU,
       nameEN,
@@ -39,15 +39,17 @@ const createMovie = async (req, res, next) => {
       year,
       description,
       image,
-      trailer,//*
+      trailerLink,
       thumbnail,
       nameRU,
       nameEN,
+      movieId,
       owner
     });
     return res.status(CodeSucces.CREATED).json(movie);
   } catch (e) {
     if (e.name === 'ValidationError') {
+      console.log(e);
       return next(new BadReqestError('Переданы некорректные данные при создании фильма.'));
     }
     console.log(e);
@@ -63,6 +65,7 @@ const deleteMovie = async (req, res, next) => {
     if (movie === null) {
       throw new NotFoundError(`Фильм ${_id} не найден.`);
     }
+
     const owner = movie.owner.toHexString();
 
     if (owner !== admin) {
