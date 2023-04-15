@@ -1,4 +1,4 @@
-const { CodeError } = require('../statusCode');
+const { CodeError } = require('../utils/statusCode');
 // 401
 class UnauthorizedError extends Error {
   constructor(message) {

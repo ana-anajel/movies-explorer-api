@@ -1,5 +1,5 @@
 const Movie = require('../models/movie');
-const { CodeSucces } = require('../statusCode');
+const { CodeSucces } = require('../utils/statusCode');
 const BadReqestError = require('../errors/BadReqestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');

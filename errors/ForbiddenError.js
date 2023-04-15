@@ -1,4 +1,4 @@
-const { CodeError } = require('../statusCode');
+const { CodeError } = require('../utils/statusCode');
 // 403
 class ForbiddenError extends Error {
   constructor(message) {

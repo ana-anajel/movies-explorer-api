@@ -1,4 +1,4 @@
-const { CodeError } = require('../statusCode');
+const { CodeError } = require('../utils/statusCode');
 // 400
 class BadReqestError extends Error {
   constructor(message) {

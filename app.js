@@ -1,4 +1,4 @@
-const { PORT, DB_ADDRESS } = require('./config');
+const { PORT, DB_ADDRESS } = require('./utils/constants');
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes');

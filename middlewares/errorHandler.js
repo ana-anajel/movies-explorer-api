@@ -1,4 +1,4 @@
-const { CodeError } = require('../statusCode');
+const { CodeError } = require('../utils/statusCode');
 
 const errorHandler = (err, req, res, next) => {
   const { statusCode = CodeError.SERVER_ERROR, message } = err;

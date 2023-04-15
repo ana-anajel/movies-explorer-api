@@ -1,4 +1,4 @@
-const { CodeError } = require('../statusCode');
+const { CodeError } = require('../utils/statusCode');
 // 404
 class NotFoundError extends Error {
   constructor(message) {
