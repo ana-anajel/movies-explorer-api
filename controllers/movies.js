@@ -10,7 +10,6 @@ const getMovies = async (req, res, next) => {
     const movies = await Movie.find({});
     return res.json(movies);
   } catch (e) {
-    console.log(e);
     return next(e);
   }
 };

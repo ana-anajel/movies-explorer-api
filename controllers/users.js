@@ -1,11 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-
 const { NODE_ENV, JWT_SECRET } = require('../utils/constants');
 const { CodeSucces } = require('../utils/statusCode');
-
-//const errorHandler = require('.ю/middlewares/errorHandler');
 const ConflictError = require('../errors/ConflictError');
 const BadReqestError = require('../errors/BadReqestError');
 const NotFoundError = require('../errors/NotFoundError');
@@ -59,7 +56,6 @@ const updateUser = async (req, res, next) => {
   }
 };
 
-// проверяем почту и пароль
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -83,10 +79,6 @@ const login = async (req, res, next) => {
     //   httpOnly: true,
     // }).send({ message: `Этот токен безопасно сохранен в httpOnly куку: ${token}` });
   } catch (e) {
-    if (e.name === 'ValidationError') {
-      return next(new BadReqestError('Переданы некорректные данные при создании.'));
-    }
-    console.log(e);
     return next(e);
   }
 };
