@@ -4,10 +4,9 @@ const BadReqestError = require('../errors/BadReqestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
 
-//*
 const getMovies = async (req, res, next) => {
   try {
-    const movies = await Movie.find({});
+    const movies = await Movie.find({ owner: req.user._id });
     return res.json(movies);
   } catch (e) {
     return next(e);
@@ -16,34 +15,9 @@ const getMovies = async (req, res, next) => {
 
 const createMovie = async (req, res, next) => {
   try {
-    const owner = req.user._id;
-    const movieId = 877655;
-    const {
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      thumbnail,
-      nameRU,
-      nameEN,
-    } = req.body;
-
     const movie = await Movie.create({
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      thumbnail,
-      nameRU,
-      nameEN,
-      movieId,
-      owner
+      ...req.body,
+      owner: req.user._id
     });
     return res.status(CodeSucces.CREATED).json(movie);
   } catch (e) {
@@ -56,20 +30,19 @@ const createMovie = async (req, res, next) => {
 
 const deleteMovie = async (req, res, next) => {
   const { _id } = req.params;
-  const admin = req.user._id;
   try {
     const movie = await Movie.findById(_id);
     if (movie === null) {
       throw new NotFoundError(`Фильм ${_id} не найден.`);
     }
-    const owner = movie.owner.toHexString();
-    if (owner !== admin) {
+    if (movie.owner.toHexString() !== req.user._id) {
       throw new ForbiddenError('Можно удалять только свои фильмы.');
     }
-    await Movie.findByIdAndRemove(_id);
+
+    await movie.deleteOne();
     return res.send({ message: `Фильм ${_id} удалён.` });
   } catch (e) {
-
+    console.log(e)
     if (e.name === 'CastError') {
       return next(new BadReqestError('Передан некорректный id фильма.'));
     }
