@@ -1,18 +1,24 @@
 require('dotenv').config();
-const { PORT, DB_ADDRESS } = require('./utils/constants');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const { errors } = require('celebrate');
+const { PORT, DB_ADDRESS } = require('./utils/constants');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
 const auth = require('./middlewares/auth');
-const { errors } = require('celebrate');
 const { validateSignUp, validateSignIn } = require('./middlewares/validate');
 const { createUser, login } = require('./controllers/users');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError');
 
 const app = express();
+
+app.use(cors());
+
 app.use(express.json());
+app.use(cookieParser());
 
 app.use(requestLogger);
 

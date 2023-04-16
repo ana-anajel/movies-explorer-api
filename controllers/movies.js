@@ -42,7 +42,6 @@ const deleteMovie = async (req, res, next) => {
     await movie.deleteOne();
     return res.send({ message: `Фильм ${_id} удалён.` });
   } catch (e) {
-    console.log(e);
     if (e.name === 'CastError') {
       return next(new BadReqestError('Передан некорректный id фильма.'));
     }
