@@ -17,7 +17,7 @@ const createMovie = async (req, res, next) => {
   try {
     const movie = await Movie.create({
       ...req.body,
-      owner: req.user._id
+      owner: req.user._id,
     });
     return res.status(CodeSucces.CREATED).json(movie);
   } catch (e) {
@@ -42,7 +42,7 @@ const deleteMovie = async (req, res, next) => {
     await movie.deleteOne();
     return res.send({ message: `Фильм ${_id} удалён.` });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     if (e.name === 'CastError') {
       return next(new BadReqestError('Передан некорректный id фильма.'));
     }

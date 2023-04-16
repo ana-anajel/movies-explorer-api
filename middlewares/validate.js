@@ -6,27 +6,27 @@ const validateSignUp = celebrate({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
     name: Joi.string().required().min(2).max(30),
-  })
+  }),
 });
 
 const validateSignIn = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-  })
+  }),
 });
 
 const validateUpdateUser = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     email: Joi.string().required().email(),
-  })
+  }),
 });
 
 const validateDeleteMovie = celebrate({
   params: Joi.object().keys({
     _id: Joi.string().pattern(/[a-f0-9]{24,24}/).length(24),
-  })
+  }),
 });
 
 const validateCreateMovie = celebrate({
@@ -36,14 +36,13 @@ const validateCreateMovie = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-
     image: Joi.string().required().pattern(url),
     trailerLink: Joi.string().required().pattern(url),
     thumbnail: Joi.string().required().pattern(url),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
-    movieId: Joi.number().required()
-  })
+    movieId: Joi.number().required(),
+  }),
 });
 
 module.exports = {
@@ -51,5 +50,5 @@ module.exports = {
   validateSignIn,
   validateUpdateUser,
   validateDeleteMovie,
-  validateCreateMovie
-}
+  validateCreateMovie,
+};

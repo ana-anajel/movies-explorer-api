@@ -8,7 +8,6 @@ const BadReqestError = require('../errors/BadReqestError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
-
 const createUser = async (req, res, next) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 10);
@@ -17,7 +16,7 @@ const createUser = async (req, res, next) => {
     return res.status(CodeSucces.CREATED).json({
       name: user.name,
       email: user.email,
-      _id: user.id
+      _id: user.id,
     });
   } catch (e) {
     if (e.code === 11000) {
@@ -83,4 +82,6 @@ const login = async (req, res, next) => {
   }
 };
 
-module.exports = { getUser, updateUser, createUser, login };
+module.exports = {
+  getUser, updateUser, createUser, login,
+};
