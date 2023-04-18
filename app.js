@@ -9,13 +9,18 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
 const auth = require('./middlewares/auth');
 const { validateSignUp, validateSignIn } = require('./middlewares/validate');
-const { createUser, login } = require('./controllers/users');
+const { createUser, login, signOut } = require('./controllers/users');
 const errorHandler = require('./middlewares/errorHandler');
 const NotFoundError = require('./errors/NotFoundError');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  maxAge: 3600,
+}));
 
 app.use(express.json());
 app.use(cookieParser());
@@ -24,6 +29,7 @@ app.use(requestLogger);
 
 app.post('/signup', validateSignUp, createUser);
 app.post('/signin', validateSignIn, login);
+app.post('/signout', signOut);
 
 app.use(auth);
 app.use(router);

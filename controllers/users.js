@@ -72,16 +72,26 @@ const login = async (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
       { expiresIn: '7d' },
     );
-    return res.status(200).send({ token });
-    // return res.cookie('jwt', token, {
-    //   maxAge: 3600000 * 24 * 7,
-    //   httpOnly: true,
-    // }).send({ message: `Этот токен безопасно сохранен в httpOnly куку: ${token}` });
+    // return res.status(200).send({ token });
+    return res.cookie('jwt', token, {
+      maxAge: 3600000 * 24 * 7,
+      httpOnly: true,
+    }).send({ message: `Этот токен безопасно сохранен в httpOnly куку: ${token}` });
+  } catch (e) {
+    console.log(e)
+    return next(e);
+  }
+};
+
+const signOut = async (req, res, next) => {
+  try {
+    await res.clearCookie('jwt');
+    return res.send({ message: 'Токен удален из куки.' });
   } catch (e) {
     return next(e);
   }
 };
 
 module.exports = {
-  getUser, updateUser, createUser, login,
+  getUser, updateUser, createUser, login, signOut,
 };
