@@ -1,12 +1,13 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { NODE_ENV, JWT_SECRET } = require('../utils/constants');
 const { CodeSucces } = require('../utils/statusCode');
 const ConflictError = require('../errors/ConflictError');
 const BadReqestError = require('../errors/BadReqestError');
 const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const createUser = async (req, res, next) => {
   try {
@@ -72,13 +73,11 @@ const login = async (req, res, next) => {
       NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
       { expiresIn: '7d' },
     );
-    // return res.status(200).send({ token });
     return res.cookie('jwt', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,
     }).send({ message: `Этот токен безопасно сохранен в httpOnly куку: ${token}` });
   } catch (e) {
-    console.log(e)
     return next(e);
   }
 };
