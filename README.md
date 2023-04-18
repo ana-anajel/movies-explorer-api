@@ -12,6 +12,6 @@
 ## Ссылки на проект
 IP-адрес 84.201.174.103
 
-Frontend https://diploma.movies-explorer.nomoredomains.monster
+<!-- Frontend https://diploma.movies-explorer.nomoredomains.monster -->
 
 Backend https://api.dip.movies-explorer.nomoredomains.monster

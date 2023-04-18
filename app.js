@@ -16,7 +16,11 @@ const NotFoundError = require('./errors/NotFoundError');
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:3000'],
+  origin: [
+    'https://api.dip.movies-explorer.nomoredomains.monster',
+    'http://api.dip.movies-explorer.nomoredomains.monster',
+    'http://localhost:3000'
+  ],
   credentials: true,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
   maxAge: 3600,
@@ -24,7 +28,6 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-
 app.use(requestLogger);
 
 app.post('/signup', validateSignUp, createUser);
@@ -36,7 +39,6 @@ app.use(router);
 app.use('*', (req, res, next) => next(new NotFoundError('Страница не существует.')));
 
 app.use(errorLogger);
-
 app.use(errors());
 app.use(errorHandler);
 
