@@ -1,6 +1,6 @@
-const port = 3000;
-const db = 'mongodb://127.0.0.1:27017/bitfilmsdb';
+const { PORT = 3000 } = process.env;
+const { DB_ADDRESS = 'mongodb://127.0.0.1:27017/bitfilmsdb' } = process.env;
 
 module.exports = {
-  port, db,
+  PORT, DB_ADDRESS,
 };
