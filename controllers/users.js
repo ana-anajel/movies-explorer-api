@@ -2,7 +2,8 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
+const { JWT_SECRET } = process.env;
+const { PROD, NODE_ENV, SECRET_KEY } = require('../utils/constants');
 const { CodeSucces } = require('../utils/statusCode');
 const ConflictError = require('../errors/ConflictError');
 const BadReqestError = require('../errors/BadReqestError');
@@ -45,10 +46,12 @@ const getUser = async (req, res, next) => {
 const updateUser = async (req, res, next) => {
   try {
     const { email, name } = req.body;
-    await User.findByIdAndUpdate(req.user._id, { email, name }, { new: true });
-    const user = await User.findById(req.user._id);
+    const user = await User.findByIdAndUpdate(req.user._id, { email, name }, { new: true });
     return res.json(user);
   } catch (e) {
+    if (e.code === 11000) {
+      return next(new ConflictError('Пользователь с таким email уже существует.'));
+    }
     if (e.name === 'ValidationError') {
       return next(new BadReqestError('Переданы некорректные данные для изменения данных профиля.'));
     }
@@ -70,7 +73,7 @@ const login = async (req, res, next) => {
 
     const token = jwt.sign(
       { _id: user._id },
-      NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
+      NODE_ENV === PROD ? JWT_SECRET : SECRET_KEY,
       { expiresIn: '7d' },
     );
     return res.cookie('jwt', token, {

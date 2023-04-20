@@ -1,42 +1,38 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const { errors } = require('celebrate');
+const options = require('./utils/options');
+const limiter = require('./middlewares/limiter');
 const { PORT, DB_ADDRESS } = require('./utils/constants');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const router = require('./routes');
-const auth = require('./middlewares/auth');
-const { validateSignUp, validateSignIn } = require('./middlewares/validate');
-const { createUser, login, signOut } = require('./controllers/users');
+// const auth = require('./middlewares/auth');
+// const { validateSignUp, validateSignIn } = require('./middlewares/validate');
+// const { createUser, login, signOut } = require('./controllers/users');
 const errorHandler = require('./middlewares/errorHandler');
-const NotFoundError = require('./errors/NotFoundError');
+// const NotFoundError = require('./errors/NotFoundError');
 
 const app = express();
-
-app.use(cors({
-  origin: [
-    'https://api.dip.movies-explorer.nomoredomains.monster',
-    'http://api.dip.movies-explorer.nomoredomains.monster',
-    'http://localhost:3000'
-  ],
-  credentials: true,
-  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  maxAge: 3600,
-}));
+app.use(helmet());
+app.use(limiter);
+app.use(cors(options));
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.post('/signup', validateSignUp, createUser);
-app.post('/signin', validateSignIn, login);
-app.post('/signout', signOut);
-
-app.use(auth);
 app.use(router);
-app.use('*', (req, res, next) => next(new NotFoundError('Страница не существует.')));
+// app.post('/signup', validateSignUp, createUser);
+// app.post('/signin', validateSignIn, login);
+// app.post('/signout', signOut);
+
+// app.use(auth);
+// app.use(router);
+// app.use('*', (req, res, next) => next(new NotFoundError('Страница не существует.')));
 
 app.use(errorLogger);
 app.use(errors());
