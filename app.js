@@ -13,12 +13,12 @@ const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
-app.use(helmet());
-app.use(limiter);
-app.use(cors(options));
 app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
+app.use(helmet());
+app.use(cors(options));
+app.use(limiter);
 app.use(router);
 app.use(errorLogger);
 app.use(errors());
