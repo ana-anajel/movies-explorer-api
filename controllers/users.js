@@ -79,7 +79,7 @@ const login = async (req, res, next) => {
     return res.cookie('jwt', token, {
       maxAge: 3600000 * 24 * 7,
       httpOnly: true,
-    }).send({ message: `Этот токен безопасно сохранен в httpOnly куку: ${token}` });
+    }).send({ message: 'Этот токен безопасно сохранен в httpOnly куку.' });
   } catch (e) {
     return next(e);
   }
