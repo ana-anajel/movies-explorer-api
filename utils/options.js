@@ -1,7 +1,5 @@
 module.exports = {
   origin: [
-    'https://api.dip.movies-explorer.nomoredomains.monster',
-    'http://api.dip.movies-explorer.nomoredomains.monster',
     'https://diploma.movies-explorer.nomoredomains.monster',
     'http://diploma.movies-explorer.nomoredomains.monster',
     'http://localhost:3000',
@@ -9,5 +7,6 @@ module.exports = {
   ],
   credentials: true,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   maxAge: 3600,
 };
