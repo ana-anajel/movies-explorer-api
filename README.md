@@ -10,7 +10,7 @@
 Адрес репозитория: https://ana-anajel.github.io/movies-explorer-api/
 
 ## Ссылки на проект
-IP-адрес 84.201.174.103
+IP-адрес 158.160.42.24
 
 <!-- Frontend https://diploma.movies-explorer.nomoredomains.monster -->
 
