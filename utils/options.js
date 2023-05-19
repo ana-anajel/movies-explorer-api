@@ -7,7 +7,6 @@ module.exports = {
   ],
   credentials: true,
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
-  preflightContinue: false,
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
   maxAge: 3600,
 };
