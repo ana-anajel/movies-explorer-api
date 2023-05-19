@@ -14,7 +14,6 @@ const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
-// статика
 app.use(express.static(patch.join(__dirname, '../movies-explorer-frontend/build')));
 app.use(helmet());
 app.use(limiter);
